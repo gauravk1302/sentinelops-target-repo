@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vulnerable-demo-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vulnerable-demo-app
+  template:
+    metadata:
+      labels:
+        app: vulnerable-demo-app
+    spec:
+      containers:
+      - name: demo-app
+        image: python:3.9-slim
+        securityContext:
+          # Scanner Test 5: Privileged container enabled
+          privileged: true
+          allowPrivilegeEscalation: true
